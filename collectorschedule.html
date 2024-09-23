@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>ADMIN</title>
+
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- FontAwesome JS-->
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+	
+</head>
+
+<body class="app">
+	<header class="app-header fixed-top">
+		<div class="app-header-inner">
+			<div class="container-fluid py-2">
+				<div class="app-header-content">
+					<div class="row justify-content-between align-items-center">
+
+						<div class="col-auto">
+							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+									role="img">
+									<title>Menu</title>
+									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+								</svg>
+							</a>
+						</div><!--//col-->
+
+
+
+						<div class="app-utilities col-auto">
+							<div class="app-utility-item app-notifications-dropdown dropdown">
+
+
+
+							</div><!--//app-utility-item-->
+
+							<div class="app-utility-item app-user-dropdown dropdown">
+								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button" aria-expanded="false"><img src="assets/images/user.png"
+										alt="user profile"></a>
+								<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+									<li><a class="dropdown-item" href="account.html">Account</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="login.html">Log Out</a></li>
+								</ul>
+							</div><!--//app-user-dropdown-->
+						</div><!--//app-utilities-->
+					</div><!--//row-->
+				</div><!--//app-header-content-->
+			</div><!--//container-fluid-->
+		</div><!--//app-header-inner-->
+		<div id="app-sidepanel" class="app-sidepanel">
+			<div id="sidepanel-drop" class="sidepanel-drop"></div>
+			<div class="sidepanel-inner d-flex flex-column">
+				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+				<div class="app-branding">
+					<a class="app-logo" href="index.html"><img class="logo-icon me-2" src="assets/images/app-logo.svg"
+							alt="logo"><span class="logo-text">ADMIN</span></a>
+
+				</div><!--//app-branding-->
+
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
+					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+						<li class="nav-item">
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link" href="index.html">
+								<span class="nav-icon">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z" />
+										<path fill-rule="evenodd"
+											d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+									</svg>
+								</span>
+								<span class="nav-link-text">Dashhboard</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+						<li class="nav-item">
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link" href="maps.html">
+								<span class="nav-icon">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z" />
+										<path fill-rule="evenodd"
+											d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z" />
+									</svg>
+								</span>
+								<span class="nav-link-text">Maps</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+
+						<li class="nav-item has-submenu">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+								<span class="nav-icon">
+									<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-files"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M4 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4z" />
+										<path
+											d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z" />
+									</svg>
+								</span>
+								<span class="nav-link-text">Logs</span>
+								<span class="submenu-arrow">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+									</svg>
+								</span><!--//submenu-arrow-->
+								
+							</a><!--//nav-link-->
+							<div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="approve.html">Approval
+											of Collection Point</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="logs.html">History</a></li>
+								</ul>
+							</div>
+						</li><!--//nav-item-->
+						<li class="nav-item has-submenu"></li>
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
+								<span class="nav-icon">
+									<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-files"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M4 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4z" />
+										<path
+											d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z" />
+									</svg>
+								</span>
+								<span class="nav-link-text">Collection Point</span>
+								<span class="submenu-arrow">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+									</svg>
+								</span><!--//submenu-arrow-->
+								
+							</a><!--//nav-link-->
+							<div id="submenu-2" class="collapse submenu submenu-2" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="getcurrentstatus.html">Current Status</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="addcollection.html">Add Collection Point</a></li>
+								</ul>
+							</div>
+						</li><!--//nav-item-->
+						<li class="nav-item has-submenu"></li>
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-3" aria-expanded="false" aria-controls="submenu-3">
+								<span class="nav-icon">
+									<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-files"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M4 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4z" />
+										<path
+											d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z" />
+									</svg>
+								</span>
+								<span class="nav-link-text">User</span>
+								<span class="submenu-arrow">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+									</svg>
+								</span><!--//submenu-arrow-->
+								
+							</a><!--//nav-link-->
+							<div id="submenu-3" class="collapse submenu submenu-3" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="useraccount.html">Account</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="userreports.html">Reports</a></li>
+								</ul>
+							</div>
+						</li><!--//nav-item-->
+						<li class="nav-item has-submenu"></li>
+							<a class="nav-link submenu-toggle active" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-4" aria-expanded="false" aria-controls="submenu-4">
+								<span class="nav-icon">
+									<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-files"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M4 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4z" />
+										<path
+											d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z" />
+									</svg>
+								</span>
+								<span class="nav-link-text">Collector</span>
+								<span class="submenu-arrow">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+									</svg>
+								</span><!--//submenu-arrow-->
+								
+							</a><!--//nav-link-->
+							<div id="submenu-4" class="collapse submenu submenu-4 show" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link " href="addcollector.html">Account</a></li>
+									<li class="submenu-item"><a class="submenu-link active" href="collectorschedule.html">Schedule</a></li>
+								</ul>
+							</div>
+						</li><!--//nav-item-->
+					</ul><!--//app-menu-->
+				</nav><!--//app-nav-->			
+			</div><!--//sidepanel-inner-->
+		</div><!--//app-sidepanel-->
+	</header><!--//app-header-->
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+				<!-- Page Title -->
+				<div class="row g-3 mb-4 align-items-center justify-content-between">
+					<div class="col-auto">
+						<h1 class="app-page-title mb-0">Collector Schedule</h1>
+					</div>
+				</div>
+	
+				<!-- Calendar Section -->
+				<div class="row">
+					<div class="col-12">
+						<div id="calendar">
+							<!-- Calendar Header -->
+							<div class="calendar-header d-flex justify-content-between align-items-center">
+								<button class="btn btn-success" id="prevMonth">&lt; Previous</button>
+								<h2 id="calendarMonthYear"></h2>
+								<button class="btn btn-success" id="nextMonth">Next &gt;</button>
+							</div>
+	
+							<!-- Calendar Body -->
+							<div class="calendar-body">
+								<div class="calendar-days">
+									<div>Sun</div>
+									<div>Mon</div>
+									<div>Tue</div>
+									<div>Wed</div>
+									<div>Thu</div>
+									<div>Fri</div>
+									<div>Sat</div>
+								</div>
+								<div id="calendarDates" class="calendar-dates">
+									<!-- Dates will be dynamically populated here -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--//app-content-->
+	</div><!--//app-wrapper-->
+	
+	<!-- Dummy Data for Collector Schedules -->
+	<script>
+		const collectors = [
+			{ name: "Juan", schedule: ["2024-09-25", "2024-09-27", "2024-10-01", "2024-10-03"] },
+			{ name: "Maria", schedule: ["2024-09-26", "2024-09-28", "2024-10-02", "2024-10-04"] },
+			{ name: "Pedro", schedule: ["2024-09-29", "2024-10-05"] },
+		];
+	
+		const calendarElement = document.getElementById('calendarDates');
+		const monthYearElement = document.getElementById('calendarMonthYear');
+		let currentDate = new Date(2024, 8); // Set to start with September 2024
+	
+		function renderCalendar() {
+			const month = currentDate.getMonth();
+			const year = currentDate.getFullYear();
+			const firstDay = new Date(year, month, 1).getDay();
+			const lastDate = new Date(year, month + 1, 0).getDate();
+	
+			calendarElement.innerHTML = '';
+			monthYearElement.textContent = currentDate.toLocaleDateString('en-US', {
+				month: 'long',
+				year: 'numeric'
+			});
+	
+			// Create empty slots for previous month's dates
+			for (let i = 0; i < firstDay; i++) {
+				const emptyDiv = document.createElement('div');
+				calendarElement.appendChild(emptyDiv);
+			}
+	
+			// Create days of the current month
+			for (let day = 1; day <= lastDate; day++) {
+				const dateDiv = document.createElement('div');
+				const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+				
+				dateDiv.classList.add('calendar-date');
+				dateDiv.innerHTML = `<span>${day}</span>`;
+	
+				// Check if any collector has a schedule on this day
+				collectors.forEach(collector => {
+					if (collector.schedule.includes(dateString)) {
+						const collectorDiv = document.createElement('div');
+						collectorDiv.textContent = collector.name;
+						collectorDiv.classList.add('collector-schedule');
+						dateDiv.appendChild(collectorDiv);
+					}
+				});
+	
+				calendarElement.appendChild(dateDiv);
+			}
+		}
+	
+		document.getElementById('prevMonth').addEventListener('click', () => {
+			currentDate.setMonth(currentDate.getMonth() - 1);
+			renderCalendar();
+		});
+	
+		document.getElementById('nextMonth').addEventListener('click', () => {
+			currentDate.setMonth(currentDate.getMonth() + 1);
+			renderCalendar();
+		});
+	
+		// Render initial calendar
+		renderCalendar();
+	</script>
+	<style>
+		#calendar {
+			max-width: 1000px; /* Increased width */
+			margin: 0 auto;
+			border: 1px solid #28a745; /* Green border */
+			border-radius: 10px;
+			overflow: hidden;
+			background-color: #fff; /* White background */
+		}
+	
+		.calendar-header {
+			background-color: #28a745; /* Green header */
+			color: #fff;
+			padding: 15px 20px; /* Increased padding */
+			border-bottom: 2px solid #ddd;
+			text-align: center;
+		}
+	
+		.calendar-body {
+			padding: 20px;
+		}
+	
+		.calendar-days {
+			display: grid;
+			grid-template-columns: repeat(7, 1fr);
+			text-align: center;
+			font-weight: bold;
+			color: #333;
+			margin-bottom: 10px;
+		}
+	
+		.calendar-dates {
+			display: grid;
+			grid-template-columns: repeat(7, 1fr);
+			grid-auto-rows: 120px; /* Increased row height */
+		}
+	
+		.calendar-date {
+			position: relative;
+			padding: 10px;
+			border: 1px solid #ddd;
+			background-color: #f9f9f9; /* Light gray for date cells */
+		}
+	
+		.calendar-date span {
+			font-weight: bold;
+			font-size: 1.5em; /* Increased font size for day numbers */
+		}
+	
+		.collector-schedule {
+			margin-top: 10px;
+			padding: 5px;
+			background-color: #28a745; /* Green for collector schedules */
+			color: #fff;
+			border-radius: 5px;
+			font-size: 0.9em;
+		}
+	
+		.btn {
+			margin: 0 10px;
+		}
+	</style>
+	<!-- App CSS -->
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+	<style>
+		#calendar {
+			max-width: 800px;
+			margin: 0 auto;
+			border: 1px solid #ddd;
+			border-radius: 10px;
+			overflow: hidden;
+			background-color: #f9f9f9;
+		}
+	
+		.calendar-header {
+			background-color: #d7f6e2;
+			color: #fff;
+			padding: 10px 20px;
+			border-bottom: 1px solid #ddd;
+			text-align: center;
+		}
+	
+		.calendar-body {
+			padding: 20px;
+		}
+	
+		.calendar-days {
+			display: grid;
+			grid-template-columns: repeat(7, 1fr);
+			text-align: center;
+			font-weight: bold;
+			color: #333;
+			margin-bottom: 10px;
+		}
+	
+		.calendar-dates {
+			display: grid;
+			grid-template-columns: repeat(7, 1fr);
+			grid-auto-rows: 100px;
+		}
+	
+		.calendar-date {
+			position: relative;
+			padding: 10px;
+			border: 1px solid #ddd;
+			background-color: #fff;
+		}
+	
+		.calendar-date span {
+			font-weight: bold;
+			font-size: 1.2em;
+		}
+	
+		.collector-schedule {
+			margin-top: 10px;
+			padding: 5px;
+			padding-left: 25px;
+			background-color: #57b474;
+			color: #fff;
+			border-radius: 5px;
+			font-size: 0.9em;
+		}
+	
+		.btn {
+			margin: 0 10px;
+		}
+	</style>
+	
+	
+	
+	
+	
+
+		<!-- Javascript -->
+		<script src="assets/plugins/popper.min.js"></script>
+		<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+
+		<!-- Page Specific JS -->
+		<script src="assets/js/app.js"></script>
+
+</body>
+
+</html>
