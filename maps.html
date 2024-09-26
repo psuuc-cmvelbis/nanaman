@@ -62,7 +62,7 @@
 									<li>
 										<hr class="dropdown-divider">
 									</li>
-									<li><a class="dropdown-item" href="login.html">Log Out</a></li>
+									<li><a class="dropdown-item" href="Landing.html">Log Out</a></li>
 								</ul>
 							</div><!--//app-user-dropdown-->
 						</div><!--//app-utilities-->
@@ -133,9 +133,9 @@
 										<path fill-rule="evenodd"
 											d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
 									</svg>
-								</span><!--//submenu-arrow-->
+								</span>
 								
-							</a><!--//nav-link-->
+							</a>
 							<div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
 								<ul class="submenu-list list-unstyled">
 									<li class="submenu-item"><a class="submenu-link" href="approve.html">Approval
@@ -280,31 +280,32 @@
 
 						// Info window content
 						var infoWindowContent = [
-							[
-								'<div class="info_content">' +
-								"<h2>Anonas Collection Point 1</h2>" +
-								"<h3>Anonas Urdaneta</h3>" +
-								"<p>Garbage Collection point of Barangay Anonas in Urdanetta</p>" +
-								'<button id="directionButton">Get Directions</button>' +
-								"</div>",
-							],
-							[
-								'<div class="info_content">' +
-								"<h2>San Vicente Collection Point 1</h2>" +
-								"<h3>San Vicente Urdaneta</h3>" +
-								"<p>Garbage Collection point of Barangay San Vicente in Urdaneta</p>" +
-								'<button id="directionButton">Get Directions</button>' +
-								"</div>",
-							],
+						['<div class="info_content">' +
+						"<h2>Anonas Collection Point 1</h2>" +
+						"<h3>Anonas Urdaneta</h3>" +
+						"<p>Garbage Collection point of Barangay Anonas in Urdanetta</p>" +
+						'<div style="text-align: center;">' +
+						'<img src="anonas.png" alt="Anonas Collection Point 1" style="width: 100%; max-width: 200px;"/>' +
+						'</div>' +
+						'<br><button id="directionButton">Get Directions</button>' +
+						"</div>"],
+						['<div class="info_content">' +
+						"<h2>San Vicente Collection Point 1</h2>" +
+						"<h3>San Vicente Urdaneta</h3>" +
+						"<p>Garbage Collection point of Barangay San Vicente in Urdanetta</p>" +
+						'<div style="text-align: center;">' +
+						'<img src="anonas2.png" alt="Anonas Collection Point 2" style="width: 100%; max-width: 200px;"/>' +
+						'</div>' +
+						'<br><button id="directionButton">Get Directions</button>' +
+						"</div>"],
 						];
-
 						// Add multiple markers to map
 						var infoWindow = new google.maps.InfoWindow(),
 							marker,
 							i;
 
 						// Trash can icon URL
-						var iconUrl = "https://cdn-icons-png.flaticon.com/512/8318/8318723.png";
+						var iconUrl = "assets/images/trash.png";
 
 						// Place each marker on the map
 						for (i = 0; i < markers.length; i++) {

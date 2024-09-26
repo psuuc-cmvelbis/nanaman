@@ -244,7 +244,7 @@
 					</div>
 				</div>
 	
-				<!-- Table of Existing Collectors -->
+				<!-- Table of Existing Collector -->
 				<div class="row">
 					<div class="col-12">
 						<table class="table table-bordered">
@@ -257,38 +257,8 @@
 									<th>Actions</th>
 								</tr>
 							</thead>
-							<tbody>
-								<!-- Dummy Data for Collectors -->
-								<tr>
-									<td>Juan Collector</td>
-									<td>Monday, Wednesday</td>
-									<td>+63 912 345 6789</td>
-									<td>juan.collector@example.com</td>
-									<td>
-										<button class="btn btn-sm btn-success">Edit</button>
-										<button class="btn btn-sm btn-danger">Delete</button>
-									</td>
-								</tr>
-								<tr>
-									<td>Maria Collector</td>
-									<td>Tuesday, Thursday</td>
-									<td>+63 923 456 7890</td>
-									<td>maria.collector@example.com</td>
-									<td>
-										<button class="btn btn-sm btn-success">Edit</button>
-										<button class="btn btn-sm btn-danger">Delete</button>
-									</td>
-								</tr>
-								<tr>
-									<td>Pedro Collector</td>
-									<td>Friday, Saturday</td>
-									<td>+63 934 567 8901</td>
-									<td>pedro.collector@example.com</td>
-									<td>
-										<button class="btn btn-sm btn-success">Edit</button>
-										<button class="btn btn-sm btn-danger">Delete</button>
-									</td>
-								</tr>
+							<tbody id="collectors-table-body">
+								<!-- Collector data will be inserted here -->
 							</tbody>
 						</table>
 					</div>
@@ -300,8 +270,12 @@
 						<h2 class="mb-3">Add New Collector</h2>
 						<form id="add-collector-form">
 							<div class="mb-3">
-								<label for="name" class="form-label">Collector Name</label>
-								<input type="text" class="form-control" id="name" name="name" placeholder="Enter collector's name" required>
+								<label for="fname" class="form-label">First Name</label>
+								<input type="text" class="form-control" id="fname" name="fname" placeholder="Enter first name" required>
+							</div>
+							<div class="mb-3">
+								<label for="lname" class="form-label">Last Name</label>
+								<input type="text" class="form-control" id="lname" name="lname" placeholder="Enter last name" required>
 							</div>
 	
 							<div class="mb-3">
@@ -336,6 +310,135 @@
 			</div>
 		</div><!--//app-content-->
 	</div><!--//app-wrapper-->
+	
+	<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+	
+	<script>
+		// Firebase configuration
+		const firebaseConfig = {
+			apiKey: "AIzaSyDsLb-eGMbfvrYoG3z01If0c9vujRV9LOM",
+			authDomain: "solidwaste4c.firebaseapp.com",
+			projectId: "solidwaste4c",
+			storageBucket: "solidwaste4c.appspot.com",
+			messagingSenderId: "834201404220",
+			appId: "1:834201404220:web:0349e0100fd01aa2939439"
+		};
+	
+		// Initialize Firebase
+		const app = firebase.initializeApp(firebaseConfig);
+		const db = firebase.firestore();
+	
+		const collectorsTableBody = document.getElementById('collectors-table-body');
+		const addCollectorForm = document.getElementById('add-collector-form');
+	
+		let editCollectorId = null; // Variable to track if we are editing or adding a new collector
+	
+		// Fetch and display collectors
+		function fetchCollectors() {
+			db.collection("Collector").get()
+				.then((querySnapshot) => {
+					collectorsTableBody.innerHTML = ''; // Clear the table body
+					querySnapshot.forEach((doc) => {
+						const collector = doc.data();
+						const collectorRow = `
+							<tr>
+								<td>${collector.firstname} ${collector.lastname}</td>
+								<td>${collector.schedule}</td>
+								<td>${collector.phone}</td>
+								<td>${collector.email}</td>
+								<td>
+									<button class="btn btn-sm btn-success" onclick="editCollector('${doc.id}')">Edit</button>
+									<button class="btn btn-sm btn-danger" onclick="deleteCollector('${doc.id}')">Delete</button>
+								</td>
+							</tr>
+						`;
+						collectorsTableBody.insertAdjacentHTML('beforeend', collectorRow);
+					});
+				})
+				.catch((error) => {
+					console.error("Error fetching collectors: ", error);
+				});
+		}
+	
+		// Add or update collector
+		addCollectorForm.addEventListener('submit', function(e) {
+			e.preventDefault();
+	
+			const collectorData = {
+				firstname: addCollectorForm['fname'].value,
+				lastname: addCollectorForm['lname'].value,
+				schedule: addCollectorForm['schedule'].value,
+				phone: addCollectorForm['phone'].value,
+				email: addCollectorForm['email'].value,
+				password: addCollectorForm['password'].value
+			};
+	
+			if (editCollectorId) {
+				// If editing, update the existing collector
+				db.collection("Collector").doc(editCollectorId).update(collectorData)
+					.then(() => {
+						console.log("Collector updated successfully!");
+						fetchCollectors(); // Refresh the table after updating
+						addCollectorForm.reset(); // Clear the form
+						editCollectorId = null; // Reset the edit ID after updating
+					})
+					.catch((error) => {
+						console.error("Error updating collector: ", error);
+					});
+			} else {
+				// If not editing, add a new collector
+				db.collection("Collector").add(collectorData)
+					.then(() => {
+						console.log("Collector added successfully!");
+						fetchCollectors(); // Refresh the table after adding
+						addCollectorForm.reset(); // Clear the form
+					})
+					.catch((error) => {
+						console.error("Error adding collector: ", error);
+					});
+			}
+		});
+	
+		// Edit collector (fetch data and populate form for editing)
+		function editCollector(id) {
+			const collectorRef = db.collection("Collector").doc(id);
+			collectorRef.get().then((doc) => {
+				if (doc.exists) {
+					const collector = doc.data();
+					addCollectorForm['fname'].value = collector.firstname;
+					addCollectorForm['lname'].value = collector.lastname;
+					addCollectorForm['schedule'].value = collector.schedule;
+					addCollectorForm['phone'].value = collector.phone;
+					addCollectorForm['email'].value = collector.email;
+					addCollectorForm['password'].value = collector.password;
+	
+					editCollectorId = id; // Set the edit ID to the document ID being edited
+				} else {
+					console.log("No such document!");
+				}
+			}).catch((error) => {
+				console.log("Error getting document:", error);
+			});
+		}
+	
+		// Delete collector
+		function deleteCollector(id) {
+			db.collection("Collector").doc(id).delete()
+				.then(() => {
+					console.log("Collector deleted successfully!");
+					fetchCollectors(); // Refresh the table after deletion
+				})
+				.catch((error) => {
+					console.error("Error deleting collector: ", error);
+				});
+		}
+	
+		// Fetch collectors on page load
+		fetchCollectors();
+	</script>
+	
 	
 	
 	

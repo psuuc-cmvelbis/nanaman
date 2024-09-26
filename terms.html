@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Terms of Service</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- App CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <style>
+        body, .app {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            position: relative;
+            background-color: #cadfaf; 
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('Trash.png'); 
+            background-size: cover;
+            background-position: center;
+            z-index: -1; 
+        }
+
+        .form-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            max-width: 800px; 
+            width: 100%; 
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 0; /* Reset padding for glass effect */
+            position: relative; 
+            z-index: 1;
+        }
+
+        .form-box .auth-form-container {
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+            padding: 30px; /* Adjusted padding */
+            border-radius: 10px;
+        }
+
+        .form-box h2 {
+            color: #006400; 
+        }
+
+        .form-box .auth-form-container h1 {
+            color: #006400;
+        }
+
+        .form-box .auth-form-container p {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+    </style>
+</head> 
+
+<body class="app app-signup p-0">     
+    <div class="background-image"></div> 
+
+    <div class="form-box">
+        <div class="auth-form-container text-start mx-auto">
+            <h1 class="auth-heading text-center mb-4">Terms of Service</h1>
+            <p>Welcome to our application. By accessing or using our services, you agree to be bound by the following terms and conditions:</p>
+
+            <h3>1. Use of Service</h3>
+            <p>You are responsible for your use of our services, including all content that you submit or upload. You must use the service in compliance with all applicable laws and regulations.</p>
+
+            <h3>2. Account Registration</h3>
+            <p>To use certain features of our service, you will need to create an account. You agree to provide accurate information and to update your information as necessary.</p>
+
+            <h3>3. Privacy</h3>
+            <p>Our privacy policy explains how we collect, use, and share your information.</p>
+
+            <h3>4. Limitation of Liability</h3>
+            <p>We are not liable for any damages that may arise from your use of our services.</p>
+
+            <h3>5. Changes to Terms</h3>
+            <p>We may update these terms at any time. We will notify you of significant changes.</p>
+
+            <div class="text-center mt-4">
+                <a href="signup.html" class="btn app-btn-primary">Go Back</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -18,6 +18,8 @@
 	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 
 </head>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
 <body class="app">
 	<header class="app-header fixed-top">
@@ -244,52 +246,73 @@
 				</div>
 	
 				<!-- User Reports Section -->
-				<div class="row">
-					<div class="col-12">
-						<div class="card shadow-sm mb-4">
-							<div class="card-body">
-								<!-- Dummy Report 1 -->
-								<h5 class="card-title mb-2">Juan Dela Cruz, Urdaneta</h5>
-								<p class="text-muted mb-1"><strong>Collection Point:</strong> CP1, Anonas Urdaneta</p>
-								<p class="card-text"><em>"Puno na ang basurahan at nangangamoy na ang paligid."</em></p>
-							</div>
-						</div>
-	
-						<div class="card shadow-sm mb-4">
-							<div class="card-body">
-								<!-- Dummy Report 2 -->
-								<h5 class="card-title mb-2">Maria Santos, Urdaneta</h5>
-								<p class="text-muted mb-1"><strong>Collection Point:</strong> CP2, San Vicente Urdaneta</p>
-								<p class="card-text"><em>"Maayos ang collection point pero kailangan na palitan ang signage dahil hirap na itong mabasa."</em></p>
-							</div>
-						</div>
-	
-						<div class="card shadow-sm mb-4">
-							<div class="card-body">
-								<!-- Dummy Report 3 -->
-								<h5 class="card-title mb-2">Pedro Gonzalez, Urdaneta</h5>
-								<p class="text-muted mb-1"><strong>Collection Point:</strong> CP2, San Vicente Urdaneta</p>
-								<p class="card-text"><em>"Laging puno ang basurahan bago magtanghali. Kailangan ng dagdag na mga basurahan o mas madalas na pagkuha ng basura."</em></p>
-							</div>
-						</div>
-	
-						<div class="card shadow-sm mb-4">
-							<div class="card-body">
-								<!-- Dummy Report 4 -->
-								<h5 class="card-title mb-2">Ana Reyes, Urdaneta</h5>
-								<p class="text-muted mb-1"><strong>Collection Point:</strong> CP1, Anonas Urdaneta</p>
-								<p class="card-text"><em>"May mga basag na bote sa paligid na maaaring makasakit."</em></p>
-							</div>
-						</div>
-					</div>
+				<div class="row" id="reports-section">
+					<!-- Report Cards will be dynamically inserted here -->
 				</div>
 			</div>
 		</div><!--//app-content-->
 	</div><!--//app-wrapper-->
 	
+	<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+	<script>
+		// Firebase configuration
+		const firebaseConfig = {
+			apiKey: "AIzaSyDsLb-eGMbfvrYoG3z01If0c9vujRV9LOM",
+			authDomain: "solidwaste4c.firebaseapp.com",
+			projectId: "solidwaste4c",
+			storageBucket: "solidwaste4c.appspot.com",
+			messagingSenderId: "834201404220",
+			appId: "1:834201404220:web:0349e0100fd01aa2939439"
+		};
 	
+		// Initialize Firebase
+		const app = firebase.initializeApp(firebaseConfig);
+		const db = firebase.firestore();
 	
+		console.log("Firebase App initialized:", firebase.app());
 	
+		// Fetch reports from Firestore
+		const reportsSection = document.getElementById("reports-section");
+	
+		function fetchReports() {
+			db.collection("ReportForm").orderBy("timestamp", "desc").get()
+				.then((querySnapshot) => {
+					console.log("Number of reports fetched: ", querySnapshot.size); // Check if we are getting reports
+					if (querySnapshot.empty) {
+						reportsSection.innerHTML = "<p>No reports available</p>";
+					}
+					querySnapshot.forEach((doc) => {
+						const report = doc.data();
+						console.log("Report data:", report); // Log each report
+	
+						const reportCard = `
+							<div class="col-12">
+								<div class="card shadow-sm mb-4">
+									<div class="card-body">
+										<div class="d-flex justify-content-between">
+											<h5 class="card-title mb-2">${report.username}</h5>
+											<span class="text-muted">${new Date(report.timestamp.toDate()).toLocaleDateString()}</span>
+										</div>
+										<p class="text-muted mb-1"><strong>Collection Point:</strong> ${report.collection_point}</p>
+										<p class="card-text"><em>"${report.feedback}"</em></p>
+									</div>
+								</div>
+							</div>`;
+						reportsSection.insertAdjacentHTML('beforeend', reportCard);
+					});
+				})
+				.catch((error) => {
+					console.error("Error fetching reports: ", error);
+					reportsSection.innerHTML = "<p>Error fetching reports</p>";
+				});
+		}
+	
+		// Call fetchReports function to load reports when the page loads
+		fetchReports();
+	</script>
+
 	
 	
 
@@ -299,7 +322,7 @@
 
 
 		<!-- Page Specific JS -->
-		<script src="assets/js/app.js"></script>
+
 
 </body>
 
