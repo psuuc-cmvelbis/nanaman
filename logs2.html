@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0"></script>
+</head>
+<body>
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="container-xl">
+                <div class="row g-3 mb-4 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <h1 class="app-page-title mb-0">Logs</h1>
+                    </div>
+                </div><!--//row-->
+                <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+                    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Emptied</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Full</a>
+                </nav>
+
+                <div class="tab-content" id="orders-table-tab-content">
+                    <!-- All Logs Tab -->
+                    <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+                        <div class="app-card app-card-orders-table shadow-sm mb-5">
+                            <div class="app-card-body">
+                                <div class="table-responsive">
+                                    <table class="table app-table-hover mb-0 text-left">
+                                        <thead>
+                                            <tr>
+                                                <th class="cell">Collection Point ID</th>
+                                                <th class="cell">Location</th>
+                                                <th class="cell">Image Source</th>
+                                                <th class="cell">Collector</th>
+                                                <th class="cell">Date and Time</th>
+                                                <th class="cell">Status</th>
+                                                <th class="cell"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic data will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emptied Logs Tab -->
+                    <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
+                        <div class="app-card app-card-orders-table mb-5">
+                            <div class="app-card-body">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 text-left">
+                                        <thead>
+                                            <tr>
+                                                <th class="cell">Collection Point ID</th>
+                                                <th class="cell">Location</th>
+                                                <th class="cell">Image Source</th>
+                                                <th class="cell">Collector</th>
+                                                <th class="cell">Date and Time</th>
+                                                <th class="cell">Status</th>
+                                                <th class="cell"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic data will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Full Logs Tab -->
+                    <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
+                        <div class="app-card app-card-orders-table mb-5">
+                            <div class="app-card-body">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 text-left">
+                                        <thead>
+                                            <tr>
+                                                <th class="cell">Collection Point ID</th>
+                                                <th class="cell">Location</th>
+                                                <th class="cell">Image Source</th>
+                                                <th class="cell">Collector</th>
+                                                <th class="cell">Date and Time</th>
+                                                <th class="cell">Status</th>
+                                                <th class="cell"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic data will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--//tab-content-->
+            </div><!--//container-xl-->
+        </div><!--//app-content-->
+    </div><!--//app-wrapper-->
+
+    <script>
+        // Initialize Supabase client
+        const { createClient } = supabase;
+                const _supabase = createClient('https://uiciowpyxfawjvaddivu.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpY2lvd3B5eGZhd2p2YWRkaXZ1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNzE0MDQyMCwiZXhwIjoyMDQyNzE2NDIwfQ.kR8PsVyqtW0QTJoFjFq6aiXU-iq0y3alXfJQIRMVgBw');
+
+   
+        async function fetchHistoryLogs() {
+            const { data: historyData, error } = await _supabase
+                .from('history')
+                .select('id, cp_name, image_url, status, collector_name, confirmation_time');
+
+            if (error) {
+                console.error('Error fetching history data:', error);
+                return;
+            }
+
+
+            for (let log of historyData) {
+                const { data: cpData, error: cpError } = await _supabase
+                    .from('collection_point')
+                    .select('cp_address')
+                    .eq('cp_name', log.cp_name)
+                    .single();
+
+                if (cpError) {
+                    console.error(`Error fetching collection point address for ${log.cp_name}:`, cpError);
+                    continue;
+                }
+
+                // Add cp_address to log
+                log.cp_address = cpData ? cpData.cp_address : 'N/A';
+            }
+
+            populateHistoryTable(historyData);
+        }
+
+
+        function populateHistoryTable(historyData) {
+            const allLogsTable = document.querySelector('#orders-all tbody');
+            const emptiedLogsTable = document.querySelector('#orders-paid tbody');
+            const fullLogsTable = document.querySelector('#orders-cancelled tbody');
+
+            allLogsTable.innerHTML = '';
+            emptiedLogsTable.innerHTML = '';
+            fullLogsTable.innerHTML = '';
+
+            historyData.forEach(log => {
+                const confirmationDate = new Date(log.confirmation_time);
+                const formattedDate = confirmationDate.toLocaleDateString();
+                const formattedTime = confirmationDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                const tableRow = `
+                    <tr>
+                        <td class="cell">${log.cp_name}</td>
+                        <td class="cell">${log.cp_address}</td>
+                        <td class="cell"><a href="${log.image_url}" target="_blank">VIEW</a></td>
+                        <td class="cell">${log.collector_name}</td>
+                        <td class="cell"><span>${formattedDate}</span><span class="note">${formattedTime}</span></td>
+                        <td class="cell"><span class="badge ${log.status === 'Emptied' ? 'bg-success' : 'bg-danger'}">${log.status}</span></td>
+                    </tr>
+                `;
+
+ 
+                allLogsTable.innerHTML += tableRow;
+
+                if (log.status === 'Emptied') {
+                    emptiedLogsTable.innerHTML += tableRow;
+                } else if (log.status === 'Full') {
+                    fullLogsTable.innerHTML += tableRow;
+                }
+            });
+        }
+
+   
+        document.addEventListener('DOMContentLoaded', fetchHistoryLogs);
+    </script>
+</body>
+</html>

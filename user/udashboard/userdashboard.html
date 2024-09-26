@@ -163,7 +163,31 @@
                 transform: translateY(-5px);
             }
         }
+        .nav-link.active:hover {
+            background-color: #28a745; /* Keep the same background color as active state */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on hover */
+        }
+        .nav-link {
+            color: #333; /* Default link color */
+            padding: 6px 15px; /* Add some padding */
+            border-radius: 5px; /* Rounded corners for the links */
+            transition: background-color 0.3s; /* Smooth background color change */
+        }
         
+        .nav-link:hover {
+            background-color: #28a745; /* Green background on hover */
+            color: white; /* Change text color on hover */
+        }
+        
+        .nav-link.active {
+            background-color: #28a745; /* Active tab color */
+            color: white; /* Active tab text color */
+        }
+        
+        .nav-link.active:hover {
+            background-color: #28a745; /* Keep the same background color as active state */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on hover */
+        }
     </style>
 </head>
 
@@ -173,18 +197,18 @@
             <div class="col-md-3 mb-2 mb-md-0"></div>
             <nav class="col-12 col-md-auto mb-2 justify-content-center mb-md-0 mt-3">
                 <ul>
-                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link active">Home</a></li>
                     <li><a href="MapLanding.html" class="nav-link">Maps</a></li>
-                    <li><a href="#" class="nav-link">About</a></li>
+                    <li><a href="prof.html" class="nav-link">Profile</a></li>
+                    <li><a href="binstatus.html" class="nav-link">Bin Status</a></li>
+                    <li><a href="report.html" class="nav-link">Report</a></li>
+                    <li><a href="/nanaman/user/index.html" class="nav-link">Log out</a></li>
                 </ul>
             </nav>
         </header>
-
         <section class="title-section">
             <h1>Solid Waste Management System<br>for the City of Urdaneta</h1>
             <p>Efficient and organized waste collection for a cleaner environment.</p>
-            <button type="button" class="btn btn-success btn-lg get-started-btn"
-                onclick="window.location.href='auth.html'">Get Started</button>
         </section>
 
         <img src="Trash.png" alt="Solid Waste Management Image" class="image-background">

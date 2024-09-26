@@ -244,22 +244,25 @@
             </div>
 
             <!-- Table of User Accounts -->
-            <div class="row">
-                <div class="col-12">
-                    <table class="table table-bordered">
+            <div class="app-card app-card-orders-table shadow-sm mb-5">
+
+				<div class="app-card-body">
+					<div class="table-responsive">
+						<table class="table app-table-hover mb-0 text-left">
                         <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Phone Number</th>
-                                <th>Email</th>
-                                <th>Action</th>
+                                <th class="cell">First Name</th>
+                                <th class="cell">Last Name</th>
+                                <th class="cell">Phone Number</th>
+                                <th class="cell">Email</th>
+                                <th class="cell">Action</th>
                             </tr>
                         </thead>
                         <tbody id="users-table-body">
                             <!-- User data will be inserted here -->
                         </tbody>
                     </table>
+					</div>
                 </div>
             </div>
         </div>
@@ -295,11 +298,11 @@
                     // Create table row for each user
                     const userRow = `
                         <tr>
-                            <td>${user.firstName}</td>
-                            <td>${user.lastName}</td>
-                            <td>${user.ContactNumber}</td>
-                            <td>${user.email}</td>
-                            <td><button class="btn btn-danger btn-sm" onclick="deleteUser('${doc.id}')">Delete</button></td>
+                            <td class="cell">${user.firstName}</td>
+                            <td class="cell">${user.lastName}</td>
+                            <td class="cell">${user.ContactNumber}</td>
+                            <td class="cell">${user.email}</td>
+                            <td class="cell"><button class="btn btn-danger btn-sm" onclick="deleteUser('${doc.id}')">Delete</button></td>
                         </tr>
                     `;
 

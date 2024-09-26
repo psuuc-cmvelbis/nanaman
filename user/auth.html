@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #cadfaf;
+            /* Light green background */
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header {
+            width: 100%;
+            border-bottom: 2px solid #006400;
+            /* Dark green border with increased thickness */
+            z-index: 10;
+            position: absolute;
+            top: 0;
+            padding: 20px 30px;
+            /* Adjusted padding for top/bottom and left/right */
+            margin-bottom: 30px;
+            /* Added margin below the header for more space */
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            width: 400px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .glass-container h1 {
+            font-size: 48px;
+            color: #006400;
+            /* Dark green color */
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .glass-container p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .auth-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .auth-buttons a {
+            width: 150px;
+            font-size: 18px;
+        }
+
+        .image-background {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            z-index: 1;
+            /* Lower than content */
+            height: 100%;
+            width: auto;
+            opacity: 0.8;
+            /* Slightly transparent */
+        }
+        @keyframes floatImage {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Center the navigation list */
+        nav ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        nav ul li {
+            list-style: none;
+        }
+
+        /* Add hover effect for the list items */
+        nav ul li a {
+            position: relative;
+            color: #444;
+            font-size: 18px;
+            padding: 8px 16px;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            color: #006400;
+        }
+
+        nav ul li a::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: #006400;
+            visibility: hidden;
+            transform: scaleX(0);
+            transition: all 0.3s ease-in-out;
+        }
+
+        nav ul li a:hover::before {
+            visibility: visible;
+            transform: scaleX(1);
+        }
+
+        .btn-success {
+            box-shadow: 0px 8px 15px rgba(0, 100, 0, 0.2);
+        }
+
+        .btn-success:hover {
+            background-color: #004d00;
+            box-shadow: 0px 15px 20px rgba(0, 100, 0, 0.4);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+        <div class="col-md-3 mb-2 mb-md-0"></div>
+        <nav class="col-12 col-md-auto mb-2 justify-content-center mb-md-0 mt-3">
+            <ul>
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="MapLanding.html" class="nav-link">Maps</a></li>
+                <li><a href="#" class="nav-link">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="glass-container">
+        <h1>Welcome</h1>
+        <p>Please choose an option to continue:</p>
+
+        <img src="ROBOT.png" alt="Robot Image" class="img-fluid mb-3" style="max-width: 80%; height: auto;">
+
+        <div class="auth-buttons">
+            <a href="/signup.html" class="btn btn-primary">Sign Up</a>
+            <a href="../login.html" class="btn btn-secondary">Login</a>
+        </div>
+    </div>
+
+    <img src="Trash.png" alt="Solid Waste Management Image" class="image-background">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Wnt1FMD9RtO9SaFeJtzB5JhbGxl+W3BQz1ivWwUHs6Jfgr13WPtgZ4F5VQJHtmL4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

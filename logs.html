@@ -12,7 +12,8 @@
     
     <!-- FontAwesome JS-->
     <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
-    
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0"></script>
+
     <!-- App CSS -->  
     <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 
@@ -233,221 +234,178 @@
 	</header><!--//app-header-->
     
     <div class="app-wrapper">
-	    
-	    <div class="app-content pt-3 p-md-3 p-lg-4">
-		    <div class="container-xl">
-			    
-			    <div class="row g-3 mb-4 align-items-center justify-content-between">
-				    <div class="col-auto">
-			            <h1 class="app-page-title mb-0">Logs</h1>
-				    </div>
-				    
-			    </div><!--//row-->
-			   
-			    
-			    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-				    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All</a>
-				    <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Emptied</a>
-				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Full</a>
-				</nav>
-				
-				
-				<div class="tab-content" id="orders-table-tab-content">
-			        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
-					    <div class="app-card app-card-orders-table shadow-sm mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-							        <table class="table app-table-hover mb-0 text-left">
-										<thead>
-											<tr>
-												<th class="cell">Collection Point ID</th>
-												<th class="cell">Location</th>
-												<th class="cell">Image Source</th>
-												<th class="cell">Collector</th>
-												<th class="cell">Date and Time</th>
-												<th class="cell">Status</th>
-												<th class="cell"></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td class="cell">CP1</td>
-												<td class="cell"><span class="truncate">Anonas Urdaneta</span></td>
-												<td class="cell"><a href="">VIEW</a></td>
-												<td class="cell">Maria</td>
-												<td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-												<td class="cell"><span class="badge bg-success">Emptied</span></td>
-											</tr>
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="container-xl">
+                <div class="row g-3 mb-4 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <h1 class="app-page-title mb-0">Logs</h1>
+                    </div>
+                </div><!--//row-->
+                <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+                    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Emptied</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Full</a>
+                </nav>
 
-											<tr>
-												<td class="cell">CP2</td>
-												<td class="cell"><span class="truncate">San Vicente Urdaneta</span></td>
-												<td class="cell"><a href="">VIEW</a></td>
-												<td class="cell">Juan</td>
-												<td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-												<td class="cell"><span class="badge bg-success">Emptied</span></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">CP1</td>
-												<td class="cell"><span class="truncate">Anonas Urdaneta</span></td>
-												<td class="cell"><a href="">VIEW</a></td>
-												<td class="cell">Maria</td>
-												<td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-												<td class="cell"><span class="badge bg-danger">Full</span></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">CP2</td>
-												<td class="cell"><span class="truncate">San Vicente Urdaneta</span></td>
-												<td class="cell"><a href="">VIEW</a></td>
-												<td class="cell">Pedro</td>
-												<td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
-												<td class="cell"><span class="badge bg-danger">Full</span></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">CP1</td>
-												<td class="cell"><span class="truncate">Anonas Urdaneta</span></td>
-												<td class="cell"><a href="">VIEW</a></td>
-												<td class="cell">Juan</td>
-												<td class="cell"><span class="cell-data">11 Oct</span><span class="note">11:18 AM</span></td>
-												<td class="cell"><span class="badge bg-success">Emptied</span></td>
-											</tr>
-		
-										</tbody>
-									</table>
-						        </div><!--//table-responsive-->
-						       
-						    </div><!--//app-card-body-->		
-						</div><!--//app-card-->
-						<nav class="app-pagination">
-							<ul class="pagination justify-content-center">
-								<li class="page-item disabled">
-									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-							    </li>
-								<li class="page-item active"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item">
-								    <a class="page-link" href="#">Next</a>
-								</li>
-							</ul>
-						</nav><!--//app-pagination-->
-						
-			        </div><!--//tab-pane-->
-			        
-			        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-					    <div class="app-card app-card-orders-table mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-								    
-							        <table class="table mb-0 text-left">
-										<thead>
-											<tr>
-												<th class="cell">Order</th>
-												<th class="cell">Product</th>
-												<th class="cell">Customer</th>
-												<th class="cell">Date</th>
-												<th class="cell">Status</th>
-												<th class="cell">Total</th>
-												<th class="cell"></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td class="cell">#15346</td>
-												<td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-												<td class="cell">John Sanders</td>
-												<td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-												<td class="cell"><span class="badge bg-success">Paid</span></td>
-												<td class="cell">$259.35</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">#15344</td>
-												<td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-												<td class="cell">Teresa Holland</td>
-												<td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-												<td class="cell"><span class="badge bg-success">Paid</span></td>
-												<td class="cell">$123.00</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">#15343</td>
-												<td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-												<td class="cell">Jayden Massey</td>
-												<td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-												<td class="cell"><span class="badge bg-success">Paid</span></td>
-												<td class="cell">$199.00</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-										
-											
-											<tr>
-												<td class="cell">#15341</td>
-												<td class="cell"><span class="truncate">Morbi vulputate lacinia neque et sollicitudin</span></td>
-												<td class="cell">Raymond Atkins</td>
-												<td class="cell"><span class="cell-data">11 Oct</span><span class="note">11:18 AM</span></td>
-												<td class="cell"><span class="badge bg-success">Paid</span></td>
-												<td class="cell">$678.26</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-		
-										</tbody>
-									</table>
-						        </div><!--//table-responsive-->
-						    </div><!--//app-card-body-->		
-						</div><!--//app-card-->
-			        </div><!--//tab-pane-->
-			        
-			        
-			        <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
-					    <div class="app-card app-card-orders-table mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-							        <table class="table mb-0 text-left">
-										<thead>
-											<tr>
-												<th class="cell">Order</th>
-												<th class="cell">Product</th>
-												<th class="cell">Customer</th>
-												<th class="cell">Date</th>
-												<th class="cell">Status</th>
-												<th class="cell">Total</th>
-												<th class="cell"></th>
-											</tr>
-										</thead>
-										<tbody>
-											
-											<tr>
-												<td class="cell">#15342</td>
-												<td class="cell"><span class="truncate">Justo feugiat neque</span></td>
-												<td class="cell">Reina Brooks</td>
-												<td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
-												<td class="cell"><span class="badge bg-danger">Cancelled</span></td>
-												<td class="cell">$59.00</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-											
-										</tbody>
-									</table>
-						        </div><!--//table-responsive-->
-						    </div><!--//app-card-body-->		
-						</div><!--//app-card-->
-			        </div><!--//tab-pane-->
-				</div><!--//tab-content-->
-				
-				
-			    
-		    </div><!--//container-fluid-->
-	    </div><!--//app-content-->
-	    
-	    
-	    
-    </div><!--//app-wrapper-->    		
+                <div class="tab-content" id="orders-table-tab-content">
+                    <!-- All Logs Tab -->
+                    <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+                        <div class="app-card app-card-orders-table shadow-sm mb-5">
+                            <div class="app-card-body">
+                                <div class="table-responsive">
+                                    <table class="table app-table-hover mb-0 text-left">
+                                        <thead>
+                                            <tr>
+                                                <th class="cell">Collection Point ID</th>
+                                                <th class="cell">Location</th>
+                                                <th class="cell">Image Source</th>
+                                                <th class="cell">Collector</th>
+                                                <th class="cell">Date and Time</th>
+                                                <th class="cell">Status</th>
+                                                <th class="cell"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic data will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emptied Logs Tab -->
+                    <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
+                        <div class="app-card app-card-orders-table mb-5">
+                            <div class="app-card-body">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 text-left">
+                                        <thead>
+                                            <tr>
+                                                <th class="cell">Collection Point ID</th>
+                                                <th class="cell">Location</th>
+                                                <th class="cell">Image Source</th>
+                                                <th class="cell">Collector</th>
+                                                <th class="cell">Date and Time</th>
+                                                <th class="cell">Status</th>
+                                                <th class="cell"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic data will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Full Logs Tab -->
+                    <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
+                        <div class="app-card app-card-orders-table mb-5">
+                            <div class="app-card-body">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 text-left">
+                                        <thead>
+                                            <tr>
+                                                <th class="cell">Collection Point ID</th>
+                                                <th class="cell">Location</th>
+                                                <th class="cell">Image Source</th>
+                                                <th class="cell">Collector</th>
+                                                <th class="cell">Date and Time</th>
+                                                <th class="cell">Status</th>
+                                                <th class="cell"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic data will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--//tab-content-->
+            </div><!--//container-xl-->
+        </div><!--//app-content-->
+    </div><!--//app-wrapper-->
+
+    <script>
+        // Initialize Supabase client
+        const { createClient } = supabase;
+                const _supabase = createClient('https://uiciowpyxfawjvaddivu.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpY2lvd3B5eGZhd2p2YWRkaXZ1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNzE0MDQyMCwiZXhwIjoyMDQyNzE2NDIwfQ.kR8PsVyqtW0QTJoFjFq6aiXU-iq0y3alXfJQIRMVgBw');
+
+   
+        async function fetchHistoryLogs() {
+            const { data: historyData, error } = await _supabase
+                .from('history')
+                .select('id, cp_name, image_url, status, collector_name, confirmation_time');
+
+            if (error) {
+                console.error('Error fetching history data:', error);
+                return;
+            }
+
+
+            for (let log of historyData) {
+                const { data: cpData, error: cpError } = await _supabase
+                    .from('collection_point')
+                    .select('cp_address')
+                    .eq('cp_name', log.cp_name)
+                    .single();
+
+                if (cpError) {
+                    console.error(`Error fetching collection point address for ${log.cp_name}:`, cpError);
+                    continue;
+                }
+
+                // Add cp_address to log
+                log.cp_address = cpData ? cpData.cp_address : 'N/A';
+            }
+
+            populateHistoryTable(historyData);
+        }
+
+
+        function populateHistoryTable(historyData) {
+            const allLogsTable = document.querySelector('#orders-all tbody');
+            const emptiedLogsTable = document.querySelector('#orders-paid tbody');
+            const fullLogsTable = document.querySelector('#orders-cancelled tbody');
+
+            allLogsTable.innerHTML = '';
+            emptiedLogsTable.innerHTML = '';
+            fullLogsTable.innerHTML = '';
+
+            historyData.forEach(log => {
+                const confirmationDate = new Date(log.confirmation_time);
+                const formattedDate = confirmationDate.toLocaleDateString();
+                const formattedTime = confirmationDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                const tableRow = `
+                    <tr>
+                        <td class="cell">${log.cp_name}</td>
+                        <td class="cell">${log.cp_address}</td>
+                        <td class="cell"><a href="${log.image_url}" target="_blank">VIEW</a></td>
+                        <td class="cell">${log.collector_name}</td>
+                        <td class="cell"><span>${formattedDate}</span><span class="note">${formattedTime}</span></td>
+                        <td class="cell"><span class="badge ${log.status === 'Emptied' ? 'bg-success' : 'bg-danger'}">${log.status}</span></td>
+                    </tr>
+                `;
+
+ 
+                allLogsTable.innerHTML += tableRow;
+
+                if (log.status === 'Emptied') {
+                    emptiedLogsTable.innerHTML += tableRow;
+                } else if (log.status === 'Full') {
+                    fullLogsTable.innerHTML += tableRow;
+                }
+            });
+        }
+
+   
+        document.addEventListener('DOMContentLoaded', fetchHistoryLogs);
+    </script>
 
  
     <!-- Javascript -->          

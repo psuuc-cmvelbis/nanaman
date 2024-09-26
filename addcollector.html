@@ -245,22 +245,24 @@
 				</div>
 	
 				<!-- Table of Existing Collector -->
-				<div class="row">
-					<div class="col-12">
-						<table class="table table-bordered">
+				<div class="app-card app-card-orders-table shadow-sm mb-5">
+					<div class="app-card-body">
+						<div class="table-responsive">
+							<table class="table app-table-hover mb-0 text-left">
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th>Schedule</th>
-									<th>Phone Number</th>
-									<th>Email</th>
-									<th>Actions</th>
+									<th class="cell">Name</th>
+									<th class="cell">Schedule</th>
+									<th class="cell">Phone Number</th>
+									<th class="cell">Email</th>
+									<th class="cell">Actions</th>
 								</tr>
 							</thead>
-							<tbody id="collectors-table-body">
-								<!-- Collector data will be inserted here -->
-							</tbody>
-						</table>
+								<tbody id="collectors-table-body">
+									<!-- Collector data will be inserted here -->
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 	
@@ -344,11 +346,11 @@
 						const collector = doc.data();
 						const collectorRow = `
 							<tr>
-								<td>${collector.firstname} ${collector.lastname}</td>
-								<td>${collector.schedule}</td>
-								<td>${collector.phone}</td>
-								<td>${collector.email}</td>
-								<td>
+								<td class="cell">${collector.firstname} ${collector.lastname}</td>
+								<td class="cell">${collector.schedule}</td>
+								<td class="cell">${collector.phone}</td>
+								<td class="cell">${collector.email}</td>
+								<td class="cell">
 									<button class="btn btn-sm btn-success" onclick="editCollector('${doc.id}')">Edit</button>
 									<button class="btn btn-sm btn-danger" onclick="deleteCollector('${doc.id}')">Delete</button>
 								</td>

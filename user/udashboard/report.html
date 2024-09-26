@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <!-- Links -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #cadfaf;
+            /* Light green background */
+            font-family: 'Arial', sans-serif;
+            position: relative;
+        }
+
+        header {
+            border-bottom: 1px solid #006400 !important;
+            /* Dark green border */
+            position: relative;
+            z-index: 10;
+        }
+
+        .title-section {
+            text-align: left;
+            margin-top: 50px;
+            margin-left: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .title-section h1 {
+            font-size: 64px;
+            color: #006400;
+            /* Dark green color */
+            font-weight: bold;
+        }
+
+        .title-section p {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .get-started-btn {
+            margin-top: 300px;
+            border-radius: 90px;
+        }
+
+        .image-background {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            z-index: 0;
+            height: 100%;
+            width: auto;
+            opacity: 0.9;
+        }
+
+        @keyframes floatImage {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Center the navigation list */
+        nav ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        nav ul li {
+            list-style: none;
+        }
+
+        /* Add hover effect for the list items */
+        nav ul li a {
+            position: relative;
+            color: #444;
+            font-size: 18px;
+            padding: 8px 16px;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            color: #006400;
+        }
+
+        nav ul li a::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: #006400;
+            visibility: hidden;
+            transform: scaleX(0);
+            transition: all 0.3s ease-in-out;
+        }
+
+        nav ul li a:hover::before {
+            visibility: visible;
+            transform: scaleX(1);
+        }
+
+        .btn-success {
+            box-shadow: 0px 8px 15px rgba(0, 100, 0, 0.2);
+        }
+
+        .btn-success:hover {
+            background-color: #004d00;
+            box-shadow: 0px 15px 20px rgba(0, 100, 0, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .get-started-btn {
+            margin-top: 50px;
+            padding: 15px 40px;
+            border-radius: 50px;
+            background-color: #006400;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0px 8px 15px rgba(0, 100, 0, 0.2);
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+
+        .get-started-btn:hover {
+            background-color: #004d00;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0px 15px 20px rgba(0, 100, 0, 0.4);
+        }
+
+        .get-started-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0px 5px 10px rgba(0, 100, 0, 0.3);
+        }
+
+        /* Bounce animation keyframes */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .nav-link.active:hover {
+            background-color: #28a745; /* Keep the same background color as active state */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on hover */
+        }
+
+        .nav-link {
+            color: #333; /* Default link color */
+            padding: 6px 15px; /* Add some padding */
+            border-radius: 5px; /* Rounded corners for the links */
+            transition: background-color 0.3s; /* Smooth background color change */
+        }
+
+        .nav-link:hover {
+            background-color: #28a745; /* Green background on hover */
+            color: white; /* Change text color on hover */
+        }
+
+        .nav-link.active {
+            background-color: #28a745; /* Active tab color */
+            color: white; /* Active tab text color */
+        }
+
+        .nav-link.active:hover {
+            background-color: #28a745; /* Keep the same background color as active state */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on hover */
+        }
+
+        .card {
+            background-color: #006400;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0px 8px 15px rgba(0, 100, 0, 0.2);
+        }
+
+        .card h5 {
+            font-weight: bold;
+        }
+
+        .card .form-control {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="Trash.png" alt="Solid Waste Management Image" class="image-background">
+    <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+            <div class="col-md-3 mb-2 mb-md-0"></div>
+            <nav class="col-12 col-md-auto mb-2 justify-content-center mb-md-0 mt-3">
+                <ul>
+                    <li><a href="/nanaman/user/udashboard/userdashboard.html" class="nav-link">Home</a></li>
+                    <li><a href="MapLanding.html" class="nav-link">Maps</a></li>
+                    <li><a href="profile.html" class="nav-link">Profile</a></li>
+                    <li><a href="binstatus.html" class="nav-link">Bin Status</a></li>
+                    <li><a href="#" class="nav-link active">Report</a></li>
+                    <li><a href="/nanaman/user/index.html" class="nav-link">Log out</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Report Issue Form Section -->
+        <h3>Report Issue</h3>
+        <div class="card text-white">
+            <div class="card-header">
+                <h5>Submit a Report</h5>
+            </div>
+            <div class="card-body">
+                <form id="reportForm">
+                    <div class="form-row mb-3">
+                        <div class="form-group col-md-6">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="report">Report:</label>
+                            <textarea class="form-control" id="report" rows="4" placeholder="Describe your issue here" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="collectionPoint">Collection Point:</label>
+                        <select class="form-control" id="collectionPoint" required>
+                            <option value="">Select a Collection Point</option>
+                            <option value="Anonas">Anonas Collection Point</option>
+                            <option value="San Vicente">San Vicente Collection Point</option>
+                            <option value="San Juan">San Juan Collection Point</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="get-started-btn">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase and SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDsLb-eGMbfvrYoG3z01If0c9vujRV9LOM",
+            authDomain: "solidwaste4c.firebaseapp.com",
+            projectId: "solidwaste4c",
+            storageBucket: "solidwaste4c.appspot.com",
+            messagingSenderId: "834201404220",
+            appId: "1:834201404220:web:0349e0100fd01aa2939439"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let collectionPointInput = document.getElementById('collectionPoint');
+        let emailInput = document.getElementById('email');
+        let feedbackInput = document.getElementById('report');
+        let usernameInput = document.getElementById('username');
+        let feedbackForm = document.getElementById('reportForm');
+
+        let submitFeedback = async (evt) => {
+            evt.preventDefault();
+
+            const collectionPoint = collectionPointInput.value;
+            const email = emailInput.value;
+            const feedback = feedbackInput.value;
+            const username = usernameInput.value;
+
+            try {
+                await setDoc(doc(db, "ReportForm", username), {
+                    collection_point: collectionPoint,
+                    email: email,
+                    feedback: feedback,
+                    timestamp: new Date(),
+                    username: username
+                });
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Feedback Submitted!',
+                    text: 'Thank you for your feedback!',
+                });
+
+                // Clear input fields after submission
+                collectionPointInput.value = '';
+                emailInput.value = '';
+                feedbackInput.value = '';
+                usernameInput.value = '';
+
+            } catch (error) {
+                console.error("Error submitting feedback: ", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Submission Error',
+                    text: 'There was an issue submitting your feedback. Please try again.',
+                });
+            }
+        };
+
+        feedbackForm.addEventListener('submit', submitFeedback);
+    </script>
+</body>
+
+</html>

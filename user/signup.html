@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Solid Waste Urdaneta Portal Sign Up</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+    
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    
+    <!-- App CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <style>
+    body, .app {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        position: relative;
+        background-color: #cadfaf;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('Trash.png');
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+        opacity: 0.7;
+    }
+
+    .form-box {
+        background-color: #006400;
+        padding: 40px;
+        border-radius: 20px;
+        max-width: 700px;
+        width: 100%;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .form-box h2 {
+        color: white;
+        text-align: center;
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .auth-form-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    input.form-control {
+        background-color: #f9f9f9;
+        border: 2px solid #ccc;
+        padding: 15px;
+        font-size: 16px;
+        border-radius: 10px;
+        box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    input.form-control:focus {
+        border-color: #006400;
+        outline: none;
+        box-shadow: 0px 0px 10px rgba(0, 100, 0, 0.1);
+    }
+
+    .form-check-input {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+
+    .form-check-label {
+        font-size: 16px;
+        color: #444;
+    }
+
+    .btn.app-btn-primary {
+        background-color: #006400;
+        color: white;
+        font-size: 18px;
+        padding: 12px 0;
+        border: none;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+
+    .btn.app-btn-primary:hover {
+        background-color: #004d00;
+        box-shadow: 0px 8px 15px rgba(0, 100, 0, 0.3);
+        transform: translateY(-3px);
+    }
+
+    .auth-option {
+        font-size: 14px;
+        margin-top: 20px;
+        color: #006400;
+    }
+
+    .text-link {
+        color: #004d00;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .text-link:hover {
+        color: #006400;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+        .form-box {
+            padding: 20px;
+            max-width: 100%;
+        }
+
+        input.form-control {
+            font-size: 14px;
+            padding: 12px;
+        }
+
+        .btn.app-btn-primary {
+            font-size: 16px;
+            padding: 10px 0;
+        }
+    }
+</style>
+
+</head> 
+
+<body class="app app-signup p-0">     
+    <div class="background-image"></div> 
+
+    <div class="form-box">
+        <div class="app-auth-body mx-auto">  
+            <h2 class="auth-heading text-center mb-4">Create Account</h2>                    
+
+            <div class="auth-form-container text-start mx-auto">
+                <form class="auth-form auth-signup-form" id="MainForm">
+                    <!-- Create a row for two-column layout -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="sr-only" for="signup-fname">First Name</label>
+                            <input id="firstnameInp" name="signup-fname" type="text" class="form-control signup-name" placeholder="First name" required="required">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="sr-only" for="signup-lname">Last Name</label>
+                            <input id="secondnameInp" name="signup-lname" type="text" class="form-control signup-name" placeholder="Last name" required="required">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="sr-only" for="signup-phoneNum">Phone Number</label>
+                            <input id="phoneInp" name="signup-phoneNum" type="text" class="form-control signup-name" placeholder="Phone Number" required="required">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="sr-only" for="signup-email">Your Email</label>
+                            <input id="emailInp" name="signup-email" type="email" class="form-control signup-email" placeholder="Email" required="required">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label class="sr-only" for="signup-password">Password</label>
+                            <input id="passwordInp" name="signup-password" type="password" class="form-control signup-password" placeholder="Create a password" required="required">
+                        </div>
+                    </div>
+                    <div class="extra mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="RememberPassword">
+                            <label class="form-check-label" for="RememberPassword">
+                            I agree to Portal's <a href="terms.html" class="app-link">Terms of Service</a> and <a href="privacy.html" class="app-link">Privacy Policy</a>.
+                            </label>
+                        </div>
+                    </div><!--//extra-->
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Create</button>
+                    </div>
+                </form>
+                
+                <div class="auth-option text-center pt-5">Already have an account? <a class="text-link" href="login.html" >Log in</a></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDsLb-eGMbfvrYoG3z01If0c9vujRV9LOM",
+            authDomain: "solidwaste4c.firebaseapp.com",
+            projectId: "solidwaste4c",
+            storageBucket: "solidwaste4c.appspot.com",
+            messagingSenderId: "834201404220",
+            appId: "1:834201404220:web:0349e0100fd01aa2939439"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);  // Firestore initialization
+        const auth = getAuth(app);
+        
+        let EmailInp = document.getElementById('emailInp');
+        let PassInp = document.getElementById('passwordInp');
+        let FirstNameInp = document.getElementById('firstnameInp');
+        let LastNameInp = document.getElementById('secondnameInp');
+        let PhoneNumInp = document.getElementById('phoneInp');
+        let MainForm = document.getElementById('MainForm');
+        let AgreeCheckbox = document.getElementById('RememberPassword');
+        
+        window.onload = () => {
+            FirstNameInp.value = localStorage.getItem('firstname') || '';
+            LastNameInp.value = localStorage.getItem('lastname') || '';
+            PhoneNumInp.value = localStorage.getItem('phone') || '';
+            EmailInp.value = localStorage.getItem('email') || '';
+        };
+    
+        
+        FirstNameInp.addEventListener('input', () => localStorage.setItem('firstname', FirstNameInp.value));
+        LastNameInp.addEventListener('input', () => localStorage.setItem('lastname', LastNameInp.value));
+        PhoneNumInp.addEventListener('input', () => localStorage.setItem('phone', PhoneNumInp.value));
+        EmailInp.addEventListener('input', () => localStorage.setItem('email', EmailInp.value));
+    
+        let RegisterUser = evt => {
+            evt.preventDefault();
+    
+            if (!AgreeCheckbox.checked) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You must agree to the Terms of Service and Privacy Policy to proceed!',
+                });
+                return; 
+            }
+    
+            createUserWithEmailAndPassword(auth, EmailInp.value, PassInp.value).then(async (credentials) => {
+                console.log(credentials);
+                const userId = credentials.user.uid;
+                
+                // Store user data in Firestore
+                await setDoc(doc(db, "Users", userId), {
+                    uid: userId, 
+                    ContactNumber: PhoneNumInp.value,
+                    Password: PassInp.value,   
+                    Email: EmailInp.value,
+                    FirstName: FirstNameInp.value,
+                    LastName: LastNameInp.value
+                });
+    
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Registered!',
+                    text: 'Your account has been created and data stored.',
+                });
+                localStorage.clear();
+            }).catch(error => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'There was an issue creating your account. Please try again.',
+                });
+            });
+        };
+    
+        MainForm.addEventListener('submit', RegisterUser);
+    </script>
+</body>
+</html>

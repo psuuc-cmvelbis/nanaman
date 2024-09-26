@@ -8,7 +8,6 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	<link rel="shortcut icon" href="favicon.ico">
 
 	<!-- FontAwesome JS-->
@@ -16,7 +15,16 @@
 
 	<!-- App CSS -->
 	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+<style>
+	#image-container {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    background-size: cover;
+    background-position: center;
+}
 
+</style>
 </head>
 
 <body class="app">
@@ -162,8 +170,8 @@
 							</a><!--//nav-link-->
 							<div id="submenu-2" class="collapse submenu submenu-2 show" data-bs-parent="#menu-accordion">
 								<ul class="submenu-list list-unstyled">
-									<li class="submenu-item"><a class="submenu-link " href="getcurrentstatus.html">Current Status</a></li>
-									<li class="submenu-item"><a class="submenu-link active" href="addcollection.html">Add Collection Point</a></li>
+									<li class="submenu-item"><a class="submenu-link active" href="getcurrentstatus.html">Current Status</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="addcollection.html">Add Collection Point</a></li>
 								</ul>
 							</div>
 						</li><!--//nav-item-->
@@ -236,93 +244,186 @@
 	<div class="app-wrapper">
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container-xl">
-				<!-- Page Title -->
+				<!-- Collection Point Name -->
 				<div class="row g-3 mb-4 align-items-center justify-content-between">
 					<div class="col-auto">
-						<h1 class="app-page-title mb-0">Add Collection Points</h1>
+						<h1 class="app-page-title mb-0" id="collection-name">Collection Point</h1>
+					</div>
+				</div>
+				<div class="mt-4">
+					<div class="input-group">
+						<select id="collectionPoint" class="form-select">
+							<option value="1">Collection Point 1</option>
+							<option value="2">Collection Point 2</option>
+						</select>
+						<button id="changeImageBtn" class="btn btn-primary">Check</button>
+					</div>
+				</div>
+				<!-- Image and Status in Two Rows -->
+				<div class="row" id="status-row">
+					<div class="col-md-4">
+						<!-- Smaller Image -->
+						<div id="image-container" style="background-image: url('assets/images/default-placeholder.jpg'); height: 250px; background-size: cover; background-position: center; border-radius: 8px;">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<!-- Status Data -->
+						<div class="status-data" id="status-data" style="display:none;">
+							<h3 id="garbage-status"></h3>
+							<p id="status-description"></p>
+							<p id="timestamp"></p>
+						</div>
 					</div>
 				</div>
 	
-				<!-- Table of Existing Collection Points -->
-				<div class="app-card app-card-orders-table shadow-sm mb-5">
-
+				<!-- Dropdown with Button -->
+				
+	
+				<!-- Logs Notification -->
+				<div class="logs-section mt-4 app-card app-card-orders-table shadow-sm mb-5" id="logs-section" style="display:none;">
 					<div class="app-card-body">
 						<div class="table-responsive">
 							<table class="table app-table-hover mb-0 text-left">
 								<thead>
 									<tr>
-										<th class="cell">Collection Point ID</th>
 										<th class="cell">Location</th>
-										<th class="cell">Image</th>
-										<th class="cell">Longitude</th>
-										<th class="cell">Latitude</th>
+										<th class="cell">Image Source</th>
+										<th class="cell">Date and Time</th>
+										<th class="cell">Status</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td class="cell">CP1</td>
-										<td class="cell">Anonas Urdaneta</td>
-										<td class="cell"><img src="image-placeholder.jpg" alt="CP1 Image" width="50"></td>
-										<td class="cell">120.5735</td>
-										<td class="cell">15.9798</td> <!-- Dummy coordinates for CP1 -->
-									</tr>
-									<tr>
-										<td class="cell">CP2</td>
-										<td class="cell">San Vicente Urdaneta</td>
-										<td class="cell"><img src="image-placeholder.jpg" alt="CP2 Image" width="50"></td>
-										<td class="cell">120.5673</td>
-										<td class="cell">15.9754</td> <!-- Dummy coordinates for CP2 -->
-									</tr>
+								<tbody id="logs-tbody">
+									<!-- Log data will be injected here -->
 								</tbody>
 							</table>
-						</div>
-					</div>
-				</div>
-				<!-- Add New Collection Point Section -->
-				<div class="row mt-4">
+						</div><!--//table-responsive-->
+					</div><!--//app-card-body-->
+				</div><!--//app-card-->
+	
+				<!-- User Reports Section -->
+				<div class="row">
 					<div class="col-12">
-						<h2 class="mb-3">Add New Collection Point</h2>
-						<form id="add-collection-point-form">
-							<div class="mb-3">
-								<label for="collectionPoint" class="form-label">Collection Point</label>
-								<select class="form-select" id="collectionPoint" name="collectionPoint" required>
-									<option value="" disabled selected>Select a collection point</option>
-									<option value="CP1" disabled style="color:gray;">CP1</option>
-									<option value="CP2" disabled style="color:gray;">CP2</option>
-									<option value="CP3">CP3</option> <!-- CP3 is available -->
-								</select>
+						
+						<!-- Dynamic user report cards -->
+						<div class="user-reports-section" id="user-reports-section" style="display:none;">
+							<h4>User Reports</h4>
+
+							<!-- User Report 1 -->
+							<div class="card shadow-sm mb-4">
+								<div class="card-body">
+									<h5 class="card-title mb-2">Juan Dela Cruz, Urdaneta</h5>
+									<span class="text-muted">date</span>
+									<p class="card-text"><em>"Puno na ang basurahan at nangangamoy na ang paligid."</em></p>
+								</div>
 							</div>
 	
-							<div class="mb-3">
-								<label for="location" class="form-label">Location</label>
-								<input type="text" class="form-control" id="location" name="location" placeholder="Enter location" required>
+							<!-- User Report 2 -->
+							<div class="card shadow-sm mb-4">
+								<div class="card-body">
+									<h5 class="card-title mb-2">Maria Santos, Urdaneta</h5>
+									<span class="text-muted">date</span>
+									<p class="card-text"><em>"Maayos ang collection point pero kailangan na palitan ang signage dahil hirap na itong mabasa."</em></p>
+								</div>
 							</div>
 	
-	
-							<div class="mb-3">
-								<label for="image" class="form-label">Upload Image</label>
-								<input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+							<!-- User Report 3 -->
+							<div class="card shadow-sm mb-4">
+								<div class="card-body">
+									<h5 class="card-title mb-2">Pedro Gonzalez, Urdaneta</h5>
+									<span class="text-muted">date</span>
+									<p class="card-text"><em>"Laging puno ang basurahan bago magtanghali. Kailangan ng dagdag na mga basurahan o mas madalas na pagkuha ng basura."</em></p>
+								</div>
 							</div>
 	
-							<button type="submit" class="btn btn-primary">Add Collection Point</button>
-						</form>
+							<!-- User Report 4 -->
+							<div class="card shadow-sm mb-4">
+								<div class="card-body">
+									<h5 class="card-title mb-2">Ana Reyes, Urdaneta</h5>
+									<span class="text-muted">date</span>
+									<p class="card-text"><em>"May mga basag na bote sa paligid na maaaring makasakit."</em></p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div><!--//app-content-->
 	</div><!--//app-wrapper-->
 	
+	<script>
+	document.getElementById('changeImageBtn').addEventListener('click', function () {
+		var collectionPoint = document.getElementById('collectionPoint').value;
+		var imageContainer = document.getElementById('image-container');
+		var statusData = document.getElementById('status-data');
+		var logsSection = document.getElementById('logs-section');
+		var userReportsSection = document.getElementById('user-reports-section');
+		var collectionName = document.getElementById('collection-name');
+		var garbageStatus = document.getElementById('garbage-status');
+		var statusDescription = document.getElementById('status-description');
+		var timestamp = document.getElementById('timestamp');
+		var logsTbody = document.getElementById('logs-tbody');
 	
+		// Clear the log entries first
+		logsTbody.innerHTML = '';
 	
+		// Current Date and Time
+		var now = new Date();
+		timestamp.innerHTML = "Date and Time: " + now.toLocaleString();
 	
+		// Based on the selected collection point, update the UI
+		if (collectionPoint == "1") {
+			imageContainer.style.backgroundImage = "url('assets/images/imageplaceholder.jpg')";
+			collectionName.innerHTML = "Collection points of Anonas";
+			garbageStatus.innerHTML = "Garbage Status: Full";
+			garbageStatus.style.color = "red";
+			statusDescription.innerHTML = "";
 	
+			// Logs (dummy data)
+			logsTbody.innerHTML += `<tr>
+				<td>Anonas Urdaneta</td>
+				<td><a href="#">VIEW</a></td>
+				<td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
+				<td class="cell"><span class="badge bg-danger">Full</span></td>
+			</tr>`;
+			logsTbody.innerHTML += `<tr>
+				<td>Anonas Urdaneta</td>
+				<td><a href="#">VIEW</a></td>
+				<td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
+				<td class="cell"><span class="badge bg-success">Emptied</span></td>
+			</tr>`;
 	
+		} else if (collectionPoint == "2") {
+			imageContainer.style.backgroundImage = "url('assets/images/imageplaceholder2.png')";
+			collectionName.innerHTML = "Collection points of San Vicente";
+			garbageStatus.innerHTML = "Garbage Status: Available";
+			garbageStatus.style.color = "green";
+			statusDescription.innerHTML = "";
+	
+			// Logs (dummy data)
+			logsTbody.innerHTML += `<tr>
+				<td>San Vicente Urdaneta</td>
+				<td><a href="#">VIEW</a></td>
+				<td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
+				<td class="cell"><span class="badge bg-success">Emptied</span></td>
+			</tr>`;
+		}
+	
+		// Show the data sections after the button click
+		statusData.style.display = "block";
+		logsSection.style.display = "block";
+		userReportsSection.style.display = "block";
+	});
+	</script>
+	
+
 
 		<!-- Javascript -->
 		<script src="assets/plugins/popper.min.js"></script>
 		<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
+<style>
 
+</style>
 		<!-- Page Specific JS -->
 		<script src="assets/js/app.js"></script>
 

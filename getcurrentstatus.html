@@ -25,6 +25,8 @@
 }
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0"></script>
+
 </head>
 
 <body class="app">
@@ -244,65 +246,259 @@
 	<div class="app-wrapper">
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container-xl">
+				<!-- Collection Point Name -->
 				<div class="row g-3 mb-4 align-items-center justify-content-between">
 					<div class="col-auto">
-						<h1 class="app-page-title mb-0">Realtime Status</h1>
+						<h1 class="app-page-title mb-0" id="collection-name">Collection Point</h1>
 					</div>
 				</div>
-	
-				<!-- Image and Dropdown with Button -->
-					<div id="image-container" style="background-image: url('assets/images/imageplaceholder');">
-					<div class="image-overlay">
-						<div class="input-group">
-							<select id="collectionPoint" class="form-select">
-								<option value="1">Collection Point 1</option>
-								<option value="2">Collection Point 2</option>
-							</select>
-							<button id="changeImageBtn" class="btn btn-primary">Check</button>
+				<div class="mt-4 pb-4">
+					<div class="input-group">
+						<select id="collectionPoint" class="form-select">
+							<option value="CP1">Collection Point 1</option>
+							<option value="CP2">Collection Point 2</option>
+						</select>
+						<button id="changeImageBtn" class="btn btn-primary">Check</button>
+					</div>
+				</div>
+				<!-- Image and Status in Two Rows -->
+				<div class="row pb-3" id="status-row">
+					<div class="col-md-4">
+						<!-- Dynamic Image from Supabase -->
+						<div id="image-container" style="background-image: url('assets/images/default-placeholder.jpg'); height: 250px; background-size: cover; background-position: center; border-radius: 8px;">
+						</div>
+					</div>
+					<div class="col-md-8 ">
+						<!-- Status Data -->
+						<div class="status-data" id="status-data" style="display:none;">
+							<h3 id="garbage-status"></h3>
+							<p id="status-description"></p>
+							<p id="timestamp"></p>
 						</div>
 					</div>
 				</div>
 	
-				<!-- Status Data -->
-				<div class="status-data" id="status-data">
-					<h5 id="location"></h5>
-					<p id="status"></p>
-					<p id="timestamp"></p>
+				<!-- Dropdown with Button -->
+				
+				<h4>Logs</h4>
+
+				<!-- Logs Notification -->
+				<div class="logs-section mt-4 app-card app-card-orders-table shadow-sm mb-5" id="logs-section" style="display:none;">
+					
+					<div class="app-card-body">
+						
+						<div class="table-responsive">
+							
+							<table class="table app-table-hover mb-0 text-left">
+								<thead>
+									<tr>
+										<th class="cell">Location</th>
+										<th class="cell">Image Source</th>
+										<th class="cell">Date and Time</th>
+										<th class="cell">Status</th>
+									</tr>
+								</thead>
+								<tbody id="logs-tbody">
+									<!-- Log data will be injected here -->
+								</tbody>
+							</table>
+						</div><!--//table-responsive-->
+					</div><!--//app-card-body-->
+				</div><!--//app-card-->
+	
+				<!-- User Reports Section -->
+				<div class="row">
+					<div class="col-12">
+						<!-- Dynamic user report cards -->
+						<div class="user-reports-section" id="user-reports-section" style="display:none;">
+							<h4>User Reports</h4>
+							<!-- Report cards will be dynamically inserted here by the script -->
+						</div>
+					</div>
 				</div>
+				
 			</div>
 		</div><!--//app-content-->
 	</div><!--//app-wrapper-->
+
+
+	<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
 	<script>
-		document.getElementById('changeImageBtn').addEventListener('click', function () {
-			var collectionPoint = document.getElementById('collectionPoint').value;
-			var imageContainer = document.getElementById('image-container');
-			var statusData = document.getElementById('status-data');
-			var location = document.getElementById('location');
-			var status = document.getElementById('status');
-			var timestamp = document.getElementById('timestamp');
+		// Firebase configuration
+		const firebaseConfig = {
+			apiKey: "AIzaSyDsLb-eGMbfvrYoG3z01If0c9vujRV9LOM",
+			authDomain: "solidwaste4c.firebaseapp.com",
+			projectId: "solidwaste4c",
+			storageBucket: "solidwaste4c.appspot.com",
+			messagingSenderId: "834201404220",
+			appId: "1:834201404220:web:0349e0100fd01aa2939439"
+		};
 	
-			if (collectionPoint == "1") {
-				imageContainer.style.backgroundImage = "url('assets/images/imageplaceholder.jpg')";
-				location.innerHTML = "Location: Collection Point 1";
-				status.innerHTML = "Current Status: Active";
-			} else {
-				imageContainer.style.backgroundImage = "url('assets/images/imageplaceholder.png')";
-				location.innerHTML = "Location: Collection Point 2";
-				status.innerHTML = "Current Status: Inactive";
+		// Initialize Firebase
+		const app = firebase.initializeApp(firebaseConfig);
+		const db = firebase.firestore();
+	
+		console.log("Firebase App initialized:", firebase.app());
+	
+		// Fetch reports from Firestore and dynamically populate the report section
+		const reportsSection = document.getElementById("user-reports-section");
+	
+		function fetchReports() {
+			db.collection("ReportForm").orderBy("timestamp", "desc").get()
+				.then((querySnapshot) => {
+					console.log("Number of reports fetched: ", querySnapshot.size);
+					if (querySnapshot.empty) {
+						reportsSection.innerHTML = "<p>No reports available</p>";
+					} else {
+						reportsSection.style.display = 'block'; // Make the section visible
+						querySnapshot.forEach((doc) => {
+							const report = doc.data();
+							console.log("Report data:", report);
+	
+							const reportCard = `
+								<div class="card shadow-sm mb-4">
+									<div class="card-body">
+										<div class="d-flex justify-content-between">
+											<h5 class="card-title mb-2">${report.username}</h5>
+											<span class="text-muted">${new Date(report.timestamp.toDate()).toLocaleDateString()}</span>
+										</div>
+										<p class="text-muted mb-1"><strong>Collection Point:</strong> ${report.collection_point}</p>
+										<p class="card-text"><em>"${report.feedback}"</em></p>
+									</div>
+								</div>`;
+							
+							// Insert report cards dynamically
+							reportsSection.insertAdjacentHTML('beforeend', reportCard);
+						});
+					}
+				})
+				.catch((error) => {
+					console.error("Error fetching reports: ", error);
+					reportsSection.innerHTML = "<p>Error fetching reports</p>";
+				});
+		}
+	
+		// Call fetchReports function to load reports when the page loads
+		fetchReports();
+	</script>
+	<script>
+		// Initialize Supabase client
+		const { createClient } = supabase;
+		const _supabase = createClient('https://uiciowpyxfawjvaddivu.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpY2lvd3B5eGZhd2p2YWRkaXZ1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNzE0MDQyMCwiZXhwIjoyMDQyNzE2NDIwfQ.kR8PsVyqtW0QTJoFjFq6aiXU-iq0y3alXfJQIRMVgBw');
+	
+		let subscription;
+	
+		// Function to subscribe to realtime updates based on selected CP
+		function subscribeToUpdates(cpId) {
+			// Unsubscribe from the previous channel if it exists
+			if (subscription) {
+				_supabase.removeChannel(subscription);
 			}
 	
-			var now = new Date();
+			// Subscribe to new changes based on the selected collection point (CP)
+			subscription = _supabase
+				.channel('collection-point-updates')
+				.on(
+					'postgres_changes',
+					{ event: '*', schema: 'public', table: 'images', filter: `cp_id=eq.${cpId}` },
+					(payload) => {
+						const updatedImageUrl = payload.new.image_url;
+						console.log('New image received:', updatedImageUrl);
+						updateImage(updatedImageUrl);
+					}
+				)
+				.subscribe();
+		}
+	
+		// Function to update image based on the latest data from Supabase
+		function updateImage(imageUrl) {
+			const imageContainer = document.getElementById('image-container');
+			imageContainer.style.backgroundImage = `url('${imageUrl}')`;
+		}
+	
+		// Function to handle uploading a request
+		async function uploadRequest() {
+			const collectionPointId = document.getElementById('collectionPoint').value;
+			const { error } = await _supabase
+				.from('controls')
+				.insert([{ who: 'live request ' + collectionPointId }]);
+	
+			if (error) {
+				console.error('Error inserting request:', error);
+			} else {
+				console.log('Request uploaded successfully');
+			}
+		}
+	
+		// Function to update status and logs (dummy data for demonstration)
+		function updateStatusAndLogs(cpId) {
+			const statusData = document.getElementById('status-data');
+			const logsTbody = document.getElementById('logs-tbody');
+			const garbageStatus = document.getElementById('garbage-status');
+			const statusDescription = document.getElementById('status-description');
+			const timestamp = document.getElementById('timestamp');
+			const now = new Date();
 			timestamp.innerHTML = "Date and Time: " + now.toLocaleString();
 	
-			// Show the data after the button click
+			// Clear the logs
+			logsTbody.innerHTML = '';
+	
+			// Update status and logs based on the selected CP
+			if (cpId === 'CP1') {
+				garbageStatus.innerHTML = "Garbage Status: Full";
+				garbageStatus.style.color = "red";
+				statusDescription.innerHTML = "Needs to be emptied";
+	
+				// Add logs (dummy data)
+				logsTbody.innerHTML += `<tr>
+					<td>Location 1</td>
+					<td><a href="#">VIEW</a></td>
+					<td>12 Oct, 04:23 PM</td>
+					<td><span class="badge bg-danger">Full</span></td>
+				</tr>`;
+			} else if (cpId === 'CP2') {
+				garbageStatus.innerHTML = "Garbage Status: Available";
+				garbageStatus.style.color = "green";
+				statusDescription.innerHTML = "Available, you can throw your trash";
+	
+				// Add logs (dummy data)
+				logsTbody.innerHTML += `<tr>
+					<td>Location 2</td>
+					<td><a href="#">VIEW</a></td>
+					<td>12 Oct, 04:23 PM</td>
+					<td><span class="badge bg-success">Emptied</span></td>
+				</tr>`;
+			}
+	
+			// Show status data and logs
 			statusData.style.display = "block";
+			document.getElementById('logs-section').style.display = "block";
+			document.getElementById('user-reports-section').style.display = "block";
+		}
+	
+		// Handle dropdown change and subscription to new CP
+		document.getElementById('collectionPoint').addEventListener('change', function () {
+			const selectedCP = this.value;
+			subscribeToUpdates(selectedCP); // Subscribe based on new selected collection point
+			updateStatusAndLogs(selectedCP); // Update status and logs
 		});
+	
+		// Handle button click
+		document.getElementById('changeImageBtn').addEventListener('click', uploadRequest);
+	
+		// Handle the first subscription on page load (for default CP1)
+		subscribeToUpdates(document.getElementById('collectionPoint').value);
+		updateStatusAndLogs(document.getElementById('collectionPoint').value);
+	
 	</script>
+	
+	
 
 		<!-- Javascript -->
 		<script src="assets/plugins/popper.min.js"></script>
 		<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-
 
 		<!-- Page Specific JS -->
 		<script src="assets/js/app.js"></script>

@@ -8,6 +8,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0"></script>
 
   <link rel="shortcut icon" href="favicon.ico" />
   <style>
@@ -266,273 +267,175 @@
 
   <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
-      <div class="container-xl">
-        <div class="row g-3 mb-4 align-items-center justify-content-between">
-          <div class="col-auto">
-            <h1 class="app-page-title mb-0">Approval of Collection Point</h1>
-          </div>
+        <div class="container-xl">
+            <div class="row g-3 mb-4 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <h1 class="app-page-title mb-0">Approval of Collection Point</h1>
+                </div>
+            </div>
+
+            <div class="tab-content" id="orders-table-tab-content">
+                <div class="tab-pane fade show active" id="orders-all" role="tabpanel">
+                    <div class="app-card app-card-orders-table shadow-sm mb-5">
+                        <div class="app-card-body">
+                            <div class="table-responsive">
+                                <table class="table app-table-hover mb-0 text-left">
+                                    <thead>
+                                        <tr>
+                                            <th class="cell">Collection Point ID</th>
+                                            <th class="cell">Location</th>
+                                            <th class="cell">Image Source</th>
+                                            <th class="cell">Date and Time</th>
+                                            <th class="cell">Status</th>
+                                            <th class="cell"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="collectionPointsTableBody">
+                                        <!-- Dynamic data will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+            const { createClient } = supabase;
+            const _supabase = createClient('https://uiciowpyxfawjvaddivu.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpY2lvd3B5eGZhd2p2YWRkaXZ1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNzE0MDQyMCwiZXhwIjoyMDQyNzE2NDIwfQ.kR8PsVyqtW0QTJoFjFq6aiXU-iq0y3alXfJQIRMVgBw');
+
+async function fetchCollectionPoints() {
+
+    const { data: cpApprovalData, error: cpApprovalError } = await _supabase
+        .from('cp_approval')
+        .select('id, cp_name, image_url, created_at, status, confirmed');
+
+    const { data: cpData, error: cpError } = await _supabase
+        .from('collection_point')
+        .select('cp_name, cp_address');
+
+    if (cpApprovalError || cpError) {
+        console.error('Error fetching data:', cpApprovalError || cpError);
+        return;
+    }
+
+    const cpAddressMap = cpData.reduce((map, cp) => {
+        map[cp.cp_name] = cp.cp_address;
+        return map;
+    }, {});
+
+    const tableBody = document.getElementById('collectionPointsTableBody');
+    tableBody.innerHTML = ''; 
+
+    for (let i = 0; i < cpApprovalData.length; i++) {
+        const row = cpApprovalData[i];
+        const cpAddress = cpAddressMap[row.cp_name] || 'N/A'; 
+
+        const tr = document.createElement('tr');
+
+        tr.innerHTML = `
+            <td class="cell">${row.cp_name}</td>
+            <td class="cell">${cpAddress}</td> <!-- Location from collection_point -->
+            <td class="cell"><a href="${row.image_url}" target="_blank">VIEW</a></td>
+            <td class="cell">
+                <span>${new Date(row.created_at).toLocaleDateString()}</span>
+                <span class="note">${new Date(row.created_at).toLocaleTimeString()}</span>
+            </td>
+            <td class="cell">${row.status}</td>
+            <td class="cell">
+                <a href="#" class="check-icon" data-id="${row.id}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
+                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z" />
+                    </svg>
+                </a>
+                <a href="#" class="x-icon" data-id="${row.id}" data-image-url="${row.image_url}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708" />
+                    </svg>
+                </a>
+            </td>
+        `;
+
+        tableBody.appendChild(tr);
+    }
+
+    const xIcons = document.getElementsByClassName('x-icon');
+    for (let i = 0; i < xIcons.length; i++) {
+        xIcons[i].addEventListener('click', function (e) {
+            e.preventDefault();
+            const id = this.getAttribute('data-id');
+            const imageUrl = this.getAttribute('data-image-url');
+            deleteCollectionPoint(id, imageUrl);
+        });
+    }
+
+    const checkIcons = document.getElementsByClassName('check-icon');
+    for (let i = 0; i < checkIcons.length; i++) {
+        checkIcons[i].addEventListener('click', function (e) {
+            e.preventDefault();
+            const id = this.getAttribute('data-id');
+            confirmCollectionPoint(id);
+        });
+    }
+}
+
+async function deleteCollectionPoint(id, imageUrl) {
+    try {
+
+        const bucketUrlBase = 'https://your-storage-url.supabase.co/storage/v1/object/public/';
+        const imagePath = imageUrl.replace(bucketUrlBase, '');
+
+        const { error: imageDeleteError } = await _supabase
+            .storage
+            .from('your-bucket-name')  
+            .remove([imagePath]);
+
+        if (imageDeleteError) {
+            console.error('Error deleting image from storage:', imageDeleteError);
+            return;
+        }
+
+        const { error: cpDeleteError } = await _supabase
+            .from('cp_approval')
+            .delete()
+            .eq('id', id);
+
+        if (cpDeleteError) {
+            console.error('Error deleting collection point:', cpDeleteError);
+        } else {
+            console.log('Collection point and image deleted successfully');
+            fetchCollectionPoints(); 
+        }
+    } catch (error) {
+        console.error('Error during deletion process:', error);
+    }
+}
+
+async function confirmCollectionPoint(id) {
+    try {
+
+        const { error } = await _supabase
+            .from('cp_approval')
+            .update({ confirmed: 'yes' })
+            .eq('id', id);
+
+        if (error) {
+            console.error('Error confirming collection point:', error);
+        } else {
+            console.log('Collection point confirmed successfully');
+            fetchCollectionPoints(); 
+        }
+    } catch (error) {
+        console.error('Error during confirmation process:', error);
+    }
+}
+
+fetchCollectionPoints();
+</script>
+
         </div>
-        <!--//row-->
-
-        <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-
-
-        </nav>
-
-        <div class="tab-content" id="orders-table-tab-content">
-          <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
-            <div class="app-card app-card-orders-table shadow-sm mb-5">
-              <div class="app-card-body">
-                <div class="table-responsive">
-                  <table class="table app-table-hover mb-0 text-left">
-                    <thead>
-                      <tr>
-                        <th class="cell">Collection Point ID</th>
-                        <th class="cell">Location</th>
-                        <th class="cell">Image Source</th>
-                        <th class="cell">Date and Time</th>
-                        <th class="cell">Status</th>
-                        <th class="cell"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="cell">CP1</td>
-                        <td class="cell">
-                          <span class="truncate">Anonas Urdaneta</span>
-                        </td>
-                        <td class="cell"><a href="">VIEW</a></td>
-                        <td class="cell">
-                          <span>17 Oct</span><span class="note">2:16 PM</span>
-                        </td>
-                        <td class="cell">
-                          <a href="" class="check-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                              class="bi bi-check-square-fill" viewBox="0 0 16 16">
-                              <path
-                                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z" />
-                            </svg>
-                          </a>
-                          <a href="" class="x-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red"
-                              class="bi bi-x-square-fill" viewBox="0 0 16 16">
-                              <path
-                                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708" />
-                            </svg>
-                          </a>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td class="cell">CP2</td>
-                        <td class="cell">
-                          <span class="truncate">San Vicente Urdaneta</span>
-                        </td>
-                        <td class="cell"><a href="">VIEW</a></td>
-                        <td class="cell">
-                          <span class="cell-data">16 Oct</span><span class="note">01:16 AM</span>
-                        </td>
-                        <td class="cell">
-                          <a href="" class="check-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                              class="bi bi-check-square-fill" viewBox="0 0 16 16">
-                              <path
-                                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z" />
-                            </svg>
-                          </a>
-                          <a href="" class="x-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red"
-                              class="bi bi-x-square-fill" viewBox="0 0 16 16">
-                              <path
-                                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708" />
-                            </svg>
-                          </a>
-                        </td>
-                      </tr>
-
-
-                    </tbody>
-                  </table>
-                </div>
-                <!--//table-responsive-->
-              </div>
-              <!--//app-card-body-->
-            </div>
-            <!--//app-card-->
-            <nav class="app-pagination">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav>
-            <!--//app-pagination-->
-          </div>
-          <!--//tab-pane-->
-
-          <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-            <div class="app-card app-card-orders-table mb-5">
-              <div class="app-card-body">
-                <div class="table-responsive">
-                  <table class="table mb-0 text-left">
-                    <thead>
-                      <tr>
-                        <th class="cell">Order</th>
-                        <th class="cell">Product</th>
-                        <th class="cell">Customer</th>
-                        <th class="cell">Date</th>
-                        <th class="cell">Status</th>
-                        <th class="cell">Total</th>
-                        <th class="cell"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="cell">#15346</td>
-                        <td class="cell">
-                          <span class="truncate">Lorem ipsum dolor sit amet eget volutpat
-                            erat</span>
-                        </td>
-                        <td class="cell">John Sanders</td>
-                        <td class="cell">
-                          <span>17 Oct</span><span class="note">2:16 PM</span>
-                        </td>
-                        <td class="cell">
-                          <span class="badge bg-success">Paid</span>
-                        </td>
-                        <td class="cell">$259.35</td>
-                        <td class="cell">
-                          <a class="btn-sm app-btn-secondary" href="#">View</a>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td class="cell">#15344</td>
-                        <td class="cell">
-                          <span class="truncate">Pellentesque diam imperdiet</span>
-                        </td>
-                        <td class="cell">Teresa Holland</td>
-                        <td class="cell">
-                          <span class="cell-data">16 Oct</span><span class="note">01:16 AM</span>
-                        </td>
-                        <td class="cell">
-                          <span class="badge bg-success">Paid</span>
-                        </td>
-                        <td class="cell">$123.00</td>
-                        <td class="cell">
-                          <a class="btn-sm app-btn-secondary" href="#">View</a>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td class="cell">#15343</td>
-                        <td class="cell">
-                          <span class="truncate">Vestibulum a accumsan lectus sed mollis
-                            ipsum</span>
-                        </td>
-                        <td class="cell">Jayden Massey</td>
-                        <td class="cell">
-                          <span class="cell-data">15 Oct</span><span class="note">8:07 PM</span>
-                        </td>
-                        <td class="cell">
-                          <span class="badge bg-success">Paid</span>
-                        </td>
-                        <td class="cell">$199.00</td>
-                        <td class="cell">
-                          <a class="btn-sm app-btn-secondary" href="#">View</a>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td class="cell">#15341</td>
-                        <td class="cell">
-                          <span class="truncate">Morbi vulputate lacinia neque et
-                            sollicitudin</span>
-                        </td>
-                        <td class="cell">Raymond Atkins</td>
-                        <td class="cell">
-                          <span class="cell-data">11 Oct</span><span class="note">11:18 AM</span>
-                        </td>
-                        <td class="cell">
-                          <span class="badge bg-success">Paid</span>
-                        </td>
-                        <td class="cell">$678.26</td>
-                        <td class="cell">
-                          <a class="btn-sm app-btn-secondary" href="#">View</a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <!--//table-responsive-->
-              </div>
-              <!--//app-card-body-->
-            </div>
-            <!--//app-card-->
-          </div>
-          <!--//tab-pane-->
-
-          <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
-            <div class="app-card app-card-orders-table mb-5">
-              <div class="app-card-body">
-                <div class="table-responsive">
-                  <table class="table mb-0 text-left">
-                    <thead>
-                      <tr>
-                        <th class="cell">Order</th>
-                        <th class="cell">Product</th>
-                        <th class="cell">Customer</th>
-                        <th class="cell">Date</th>
-                        <th class="cell">Status</th>
-                        <th class="cell">Total</th>
-                        <th class="cell"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="cell">#15342</td>
-                        <td class="cell">
-                          <span class="truncate">Justo feugiat neque</span>
-                        </td>
-                        <td class="cell">Reina Brooks</td>
-                        <td class="cell">
-                          <span class="cell-data">12 Oct</span><span class="note">04:23 PM</span>
-                        </td>
-                        <td class="cell">
-                          <span class="badge bg-danger">Cancelled</span>
-                        </td>
-                        <td class="cell">$59.00</td>
-                        <td class="cell">
-                          <a class="btn-sm app-btn-secondary" href="#">View</a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <!--//table-responsive-->
-              </div>
-              <!--//app-card-body-->
-            </div>
-            <!--//app-card-->
-          </div>
-          <!--//tab-pane-->
-        </div>
-        <!--//tab-content-->
-      </div>
-      <!--//container-fluid-->
     </div>
-    <!--//app-content-->
-
-    <!--//app-footer-->
-  </div>
+</div>
   <!--//app-wrapper-->
   <script src="assets/plugins/popper.min.js"></script>
   <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
